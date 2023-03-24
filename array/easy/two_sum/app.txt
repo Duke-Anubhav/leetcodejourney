@@ -1,0 +1,64 @@
+we create a map with vector elements as key and their indices as value
+    key    -->   value
+    nums[i]-->   i
+
+iterate the vector nums
+if we find the (target-nums[i]) in map key then we store the key and value in answers vector 
+    if(mpp.find(target - nums[i]) != mpp.end()){
+                ans.push_back(mpp[target-nums[i]]);
+                ans.push_back(i);
+                return ans;
+            }
+    else we insert that index and value to map
+
+    two pointer approach
+    ||
+    || 
+    \/
+
+#include<map>
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        map<int, int> mp;
+        vector<int>ans;
+        for(int i=0;i<nums.size();i++){
+            mp.insert({ i, nums.at(i) });
+        }
+        sort(nums.begin(),nums.end());
+        int n = nums.size();
+        int i=0,j=n-1;
+        // for(int i=0;i<n;i++){
+        //     for(int j=0;j<n;j++){
+        //         int k=nums[i]+nums[j];
+        //         if((i!=j)&&(k==target)){
+        //             return{i, j};
+        //             exit (0);
+        //         }
+        //     }
+        // }
+        while(i<=j){
+            if(nums.at(i)+nums.at(j)==target){
+                break;
+            }
+            if(nums.at(i)+nums.at(j)>target){
+               j--;
+            }
+            if(nums.at(i)+nums.at(j)<target){
+               i++;
+            }
+        }
+         for (auto& it : mp) {
+        if (it.second == nums.at(i)) {
+            ans.push_back(it.first);
+        }
+    }
+         for (auto& it2 : mp) {
+        if (it2.second == nums.at(j)) {
+            ans.push_back(it2.first);
+        }
+    }
+        return{ans.at(0),ans.at(1)};
+        return {};
+    }
+};
